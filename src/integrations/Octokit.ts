@@ -27,13 +27,12 @@ export default class Octokit {
     return data;
   }
 
-  async addLabelToIssue(owner: string, repo: string, issueNumber: number, labels: string[], color: string) {
+  async addLabelToIssue(owner: string, repo: string, issueNumber: number, labels: string[]) {
     const {data} = await this.client.issues.addLabels({
       owner,
       repo,
       issue_number: issueNumber,
       labels,
-      color,
     });
     return data;
   }
