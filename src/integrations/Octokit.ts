@@ -33,7 +33,7 @@ export default class Octokit {
       repo,
       issue_number: issueNumber,
       labels,
-      color
+      color,
     });
     return data;
   }
