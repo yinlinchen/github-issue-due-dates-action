@@ -53,16 +53,16 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         for (const issue of results) {
             const daysUtilDueDate = yield (0, dateUtils_1.datesToDue)(issue.due);
             // 7 days until due date
-            if (daysUtilDueDate <= 7 && daysUtilDueDate > 3) {
+            if (daysUtilDueDate <= 8 && daysUtilDueDate > 3) {
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.NEXT_WEEK_TAG_NAME]);
             }
             // 3 days due
-            if (daysUtilDueDate <= 3 && daysUtilDueDate > 1) {
+            if (daysUtilDueDate <= 4 && daysUtilDueDate > 1) {
                 yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.NEXT_WEEK_TAG_NAME, issue.number);
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.DUE_THREEDAYS_TAG_NAME]);
             }
             // 1 day due
-            if (daysUtilDueDate <= 1 && daysUtilDueDate > 0) {
+            if (daysUtilDueDate <= 2 && daysUtilDueDate > 0) {
                 yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.DUE_THREEDAYS_TAG_NAME, issue.number);
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.DUE_TOMORROW_TAG_NAME]);
             }
