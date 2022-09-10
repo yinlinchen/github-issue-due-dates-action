@@ -17,11 +17,11 @@ export const run = async () => {
     const results = await ok.getIssuesWithDueDate(issues);
     for (const issue of results) {
       const daysUtilDueDate = await datesToDue(issue.due);
-      console.log("daysUtilDueDate " + daysUtilDueDate);
+
       // 7 days until due date
-      if (daysUtilDueDate <= 7 && daysUtilDueDate > 3) {
-        await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [NEXT_WEEK_TAG_NAME]);
-      }
+      // if (daysUtilDueDate <= 7 && daysUtilDueDate > 3) {
+      //   await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [NEXT_WEEK_TAG_NAME]);
+      // }
       // 3 days due
       if (daysUtilDueDate <= 3 && daysUtilDueDate > 1) {
         await ok.removeLabelFromIssue(context.repo.owner, context.repo.repo, NEXT_WEEK_TAG_NAME, issue.number);
