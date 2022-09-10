@@ -39,13 +39,14 @@ class Octokit {
             return data;
         });
     }
-    addLabelToIssue(owner, repo, issueNumber, labels) {
+    addLabelToIssue(owner, repo, issueNumber, labels, color) {
         return __awaiter(this, void 0, void 0, function* () {
             const { data } = yield this.client.issues.addLabels({
                 owner,
                 repo,
                 issue_number: issueNumber,
                 labels,
+                color
             });
             return data;
         });
