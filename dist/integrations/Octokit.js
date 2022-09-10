@@ -17,7 +17,7 @@ const front_matter_1 = __importDefault(require("front-matter"));
 const constants_1 = require("../constants");
 class Octokit {
     constructor(token) {
-        this.client = github_1.getOctokit(token);
+        this.client = (0, github_1.getOctokit)(token);
     }
     listAllOpenIssues(owner, repo) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -71,7 +71,7 @@ class Octokit {
         return __awaiter(this, void 0, void 0, function* () {
             return rawIssues.filter(issue => {
                 // TODO: Move into utils
-                const meta = front_matter_1.default(issue.body);
+                const meta = (0, front_matter_1.default)(issue.body);
                 const due = meta.attributes && (meta.attributes.due || meta.attributes.Due);
                 if (meta.attributes && due) {
                     return Object.assign(issue, { due });

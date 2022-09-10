@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -47,14 +51,24 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const issues = yield ok.listAllOpenIssues(github_1.context.repo.owner, github_1.context.repo.repo);
         const results = yield ok.getIssuesWithDueDate(issues);
         for (const issue of results) {
-            const daysUtilDueDate = yield dateUtils_1.datesToDue(issue.due);
-            // Between 0 and 7 days until due date
-            if (daysUtilDueDate <= 7 && daysUtilDueDate > 0) {
+            const daysUtilDueDate = yield (0, dateUtils_1.datesToDue)(issue.due);
+            // 7 days until due date
+            if (daysUtilDueDate <= 7 && daysUtilDueDate > 3) {
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.NEXT_WEEK_TAG_NAME]);
+            }
+            // 3 days due
+            if (daysUtilDueDate <= 3 && daysUtilDueDate > 1) {
+                yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.NEXT_WEEK_TAG_NAME, issue.number);
+                yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.DUE_THREEDAYS_TAG_NAME]);
+            }
+            // 1 day due
+            if (daysUtilDueDate <= 1 && daysUtilDueDate > 0) {
+                yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.DUE_THREEDAYS_TAG_NAME, issue.number);
+                yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.DUE_TOMORROW_TAG_NAME]);
             }
             // Issue is due
             if (daysUtilDueDate <= 0) {
-                yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.NEXT_WEEK_TAG_NAME, issue.number);
+                yield ok.removeLabelFromIssue(github_1.context.repo.owner, github_1.context.repo.repo, constants_1.DUE_TOMORROW_TAG_NAME, issue.number);
                 yield ok.addLabelToIssue(github_1.context.repo.owner, github_1.context.repo.repo, issue.number, [constants_1.OVERDUE_TAG_NAME]);
             }
         }
@@ -69,4 +83,4 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.run = run;
-exports.run();
+(0, exports.run)();

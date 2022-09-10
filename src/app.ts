@@ -20,7 +20,7 @@ export const run = async () => {
 
       // 7 days until due date
       if (daysUtilDueDate <= 7 && daysUtilDueDate > 3) {
-        await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [DUE_THREEDAYS_TAG_NAME]);
+        await ok.addLabelToIssue(context.repo.owner, context.repo.repo, issue.number, [NEXT_WEEK_TAG_NAME]);
       }
       // 3 days due
       if (daysUtilDueDate <= 3 && daysUtilDueDate > 1) {
